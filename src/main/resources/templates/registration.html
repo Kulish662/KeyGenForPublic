@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="commonParts/common.html::header">
+</head>
+<body>
+<div>
+    <div th:insert="commonParts/common.html::body"></div>
+    <div class="container">
+        <label th:text="${message}"></label>
+        <form th:action="@{/registration}" method="post">
+            <div th:replace="commonParts/loginfrom.html::form(false)"></div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

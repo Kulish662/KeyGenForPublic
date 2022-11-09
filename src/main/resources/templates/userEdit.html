@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="commonParts/common.html::header">
+</head>
+<body>
+<div th:insert="commonParts/common.html::body"></div>
+<form th:action="@{edituser}" method="post" th:object="${user}">
+    <label>Имя пользователя</label>
+    <label th:text="${user.username}"></label>
+    <div th:each="role:${roles}">
+        <label th:text="${role}"></label>
+<!--        th:value="${role}" и th:name="rolesToSet"  нужно чтобы в контроллере получить список ролей (см контроллер),
+видимо, если запрашивать в контроллере параметр тега по th:each он пихает все итерации в лист под именем ((th:)name)параметра-->
+        <input type="checkbox"
+               th:value="${role}"
+               th:name="rolesToSet"
+               th:checked="${#lists.contains(user.roles, role)}">
+    </div>
+<!--    Спринг преобразует в User объект только по id, напрямую он преобразовывать не хочет-->
+    <input type="hidden" th:value="${user.id}" name="userToEditId">
+    <input type="hidden" th:value="${roles}">
+    <button type="submit">Сохранить</button>
+</form>
+</body>
+</html>

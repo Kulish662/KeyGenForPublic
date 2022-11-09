@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="commonParts/common.html::header">
+</head>
+<body>
+<div>
+  <div th:insert="commonParts/common.html::body"></div>
+  <div class="container-fluid">
+    <table class="table table-dark table-striped">
+      <thead>
+      <th>Автор изменения</th>
+      <th>Дата изменения</th>
+      <th>Цель изменения</th>
+      <th>Старые роли</th>
+      <th>Новые роли</th>
+      </thead>
+      <tbody>
+      <tr th:if="${logs.empty}">
+        <td colspan="2">Логи отсутствуют</td>
+      </tr>
+      <tr th:each="log:${logs}">
+        <td th:text="${log.author.username}"></td>
+        <td th:text="${log.date}"></td>
+        <td th:text="${log.target.username}"></td>
+        <td th:text="${log.oldRoles}"></td>
+        <td th:text="${log.newRoles}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

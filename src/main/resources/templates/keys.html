@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="commonParts/common.html::header">
+</head>
+<body>
+<div>
+    <div th:insert="commonParts/common.html::body"></div>
+    <div class="container-fluid">
+        <!--        <div style="max-width: 100%; overflow: scroll">-->
+        <table class="table table-dark table-hover table-sm">
+            <thead class="text-center">
+            <th>Автор генерации</th>
+            <th>Организация</th>
+            <th>Для кого генерировалось</th>
+            <th>Комментарий</th>
+            <th>Дата генерации</th>
+            <th>Дата окончание лицензии</th>
+            <th>Серийный номер</th>
+            <th>Ключ</th>
+            </thead>
+            <tbody>
+            <tr th:if="${keys.empty}">
+                <td colspan="2">Логи отсутствуют</td>
+            </tr>
+            <tr th:each="key:${keys}">
+                <td th:text="${key.author.username}"></td>
+                <td th:text="${key.organization.getName()}"></td>
+                <td th:text="${key.getLicenceOwner()}"></td>
+                <td th:text="${key.comment}"></td>
+                <td th:text="${key.generateDate}"></td>
+                <td th:text="${key.expireDate}"></td>
+                <td class="col-sm-2 text-break" th:text="${key.serial}"></td>
+                <td class="col-sm-2 text-break" th:text="${key.key}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <!--        </div>-->
+    </div>
+</div>
+</body>
+</html>

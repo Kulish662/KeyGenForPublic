@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="commonParts/common.html::header">
+</head>
+<body>
+<div>
+    <div th:insert="commonParts/common.html::body"></div>
+    <div class="container col-sm-8">
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <form th:method="post" th:action="@{keygen/addOrganisation}" th:id="orgEditForm">
+                <input type="text" placeholder="Название организации" th:name="organisationToAddName">
+                <input type="submit" th:id="addOrgBut" name="add" value="Добавить организацию">
+                <input type="submit" th:id="removeOrgBut" name="remove"
+                       value="Удалить организацию, выбранную ниже">
+                <input type="hidden" style="display: none" th:name="organisationForEdit" th:id="organisationForEdit">>
+            </form>
+        </div>
+        <form th:action="@{keygen}" method="post" th:object="${key}" enctype="multipart/form-data">
+            <div class="my-3">
+                <div th:text="${errorMessage}"></div>
+                <table>
+                    <tr>
+                        <div class="my-2">
+                            <input class="form-group" type="text" th:field="*{licenceOwner}"
+                                   placeholder="ФИО для кого генерируется ключ" required size="40">
+                            <select class="text-center" th:field="*{organization}" th:name="chosenOrganisation" th:id="chosenOrganisation">
+                                <div th:each="organisation:${organisations}">
+                                    <option th:value="${organisation.getId()}"
+                                            th:text="${organisation.getName()}">
+                                    </option>
+                                </div>
+                            </select>
+                        </div>
+                    </tr>
+                    <tr>
+                        <td><label class="me-3">Дата окончания лицензии</label></td>
+                        <td><input id="expireDateCalendar" th:name="expireDateCalendar" type="date"></td>
+                    </tr>
+                    <tr>
+                        <td><label class="me-3">Серийный номер</label></td>
+                        <td><input id="fileChooseBtn" type="file" th:name="serialFile"
+                                   class="form-control-file rounded-2"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="form-group my-1">
+                <textarea class="form-control rounded-2" th:field="*{comment}" rows="3"
+                          placeholder="Комментарий (например для кого/по какой причине генерируется ключ)"></textarea>
+            </div>
+
+            <button disabled="true" id="genKeyButton" type="submit" class="btn btn-primary my-3">Сгенерировать</button>
+        </form>
+    </div>
+</div>
+<script src="/keygen.js"></script>
+</body>
+</html>

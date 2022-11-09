@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:insert="commonParts/common.html::header">
+</head>
+<body>
+<div>
+    <div th:insert="commonParts/common.html::body"></div>
+    <div class="container-fluid">
+        <table class="table table-dark table-striped">
+            <thead>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Patronymic</th>
+            <th>Login</th>
+            <th>Role</th>
+            <th></th>
+            </thead>
+            <tbody class="table-group-divider">
+            <tr th:if="${users.empty}">
+                <td colspan="2"> No user presented</td>
+            </tr>
+            <tr th:each="user:${users}">
+                <td th:text="${user.name}">Name</td>
+                <td th:text="${user.surName}">Surname</td>
+                <td th:text="${user.patronymic}">Patronymic</td>
+                <td th:text="${user.username}">User Name</td>
+                <td th:text="${user.roles}">Role</td>
+                <td><a th:href="@{/users/{id}(id=${user.id})}">изменить роли</a></td>
+                <!--        todo сделать так, чтобы в метод контроллера приходил сразу класс User -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
